@@ -1,0 +1,26 @@
+@mixin text($fsize, $fweight, $fcaps) {
+  font-size: $fsize;
+  font-weight: $fweight;
+  text-transform: $fcaps;
+}
+
+@mixin full-screen {
+  width: 100%;
+  height: 100vh;
+}
+
+@mixin full-block {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin btn-size($btn_w, $btn_h){
+  width: $btn_w;
+  height: $btn_h;
+}
+
+@mixin mobile($device){
+  @media screen and (max-width: $device){
+    @content;
+  }
+}

@@ -1,0 +1,871 @@
+@import 'variables';
+@import 'mixins';
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: $primary-font;
+  background-color: $bg-color;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.container {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 100vw;
+  max-width: 1170px;
+
+  //  overflow-x: hidden;
+  @include mobile(1175px) {
+    padding: 0 30px;
+  }
+}
+
+.header {
+  position: absolute;
+  height: 100px;
+  right: 0;
+  top: 0;
+  left: 0;
+  padding: 32px 0;
+  z-index: 50;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &_fixed {
+    position: fixed;
+    margin-top: -100px;
+    padding: 23px 0;
+    height: 70px;
+    background-color: adjust-color($intro_grad, $alpha: -0.05);
+    transform: translateY(100px);
+    transition: transform .3s linear;
+  }
+}
+
+.menu {
+  @include mobile($iPad) {
+    position: absolute;
+    //    display: fixed;
+    top: 47px;
+    right: 0;
+    width: 70%;
+    max-width: 300px;
+    background: none;
+    //    transform: translateX(300px);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+
+}
+
+.nav {
+  display: block;
+  @include text(13px, bold, uppercase);
+
+  @include mobile($iPad) {
+    position: relative;
+    //    display: fixed;
+    width: 100%;
+    //    max-width: 300px;
+    background-color: $intro_grad;
+    transform: translateX(300px);
+    transition: transform 0.3s ease;
+  }
+
+  &__link {
+    position: relative;
+    display: inline-block;
+    margin: 11px 0 11px 50px;
+    text-decoration: none;
+    color: $color-link;
+    cursor: pointer;
+    opacity: .75;
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: $button_bg;
+    }
+
+    @include mobile(1175px) {
+      margin-left: 20px;
+    }
+
+    @include mobile($iPad) {
+      display: block;
+      margin: 20px 0 20px 30px;
+
+      &:first-child {
+        margin-top: 0;
+        padding-top: 20px;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 20px;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        margin-top: 20px;
+        margin-left: -30px;
+        max-width: 300px;
+        height: 1px;
+        background-color: $color-gray;
+
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+    }
+  }
+}
+
+.nav-toggle {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  display: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  opacity: 0.75;
+  z-index: 2;
+
+  & span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: $color-white;
+    color: transparent;
+    transition: background .2s linear;
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background-color: $color-white;
+      transition: transform .2s linear;
+    }
+
+    &::before {
+      top: -10px;
+    }
+
+    &::after {
+      top: 10px;
+    }
+  }
+
+  &_active {
+
+    & ~ .menu .nav {
+
+      transform: translateX(0);
+
+    }
+
+    span {
+      background: none;
+
+      &::before {
+        transform: rotate(-45deg);
+        transform-origin: right top;
+      }
+
+      &::after {
+        transform: rotate(45deg);
+        transform-origin: right bottom;
+      }
+    }
+  }
+
+  @include mobile($iPad) {
+    display: block;
+  }
+}
+
+.intro {
+  position: relative;
+  @include full-screen;
+  margin: 0;
+  overflow-x: hidden;
+
+  &_background {
+    position: relative;
+    margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    @include full-block;
+    background: url("../images/intro/intro_bg-min.jpg") center no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+
+    &::before {
+      content: "";
+      position: absolute;
+      @include full-block;
+      background-color: adjust-color($intro_grad, $alpha: -0.05);
+      z-index: 0;
+    }
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include full-screen;
+    max-width: 920px;
+    text-align: center;
+    margin: 0 auto;
+
+    @include mobile(1175px) {
+      max-width: 800px;
+    }
+
+    @include mobile($iPad) {
+      max-width: 500px;
+    }
+
+    @include mobile($iPhone) {
+      max-width: 250px;
+    }
+  }
+
+  &__title {
+    font-family: $title-font;
+    @include text(65px, 500, uppercase);
+    line-height: 1.1;
+    margin-bottom: 40px;
+    color: $color-white;
+
+    @include mobile($iPad) {
+      font-size: 50px;
+    }
+
+    @include mobile($iPhone) {
+      margin-bottom: 20px;
+      font-size: 25px;
+    }
+  }
+
+  &__subtitle {
+    @include text(22px, 500, none);
+    line-height: 1.5;
+    margin-bottom: 75px;
+    color: $color-gray;
+
+    @include mobile($iPad) {
+      font-size: 18px;
+    }
+
+    @include mobile($iPhone) {
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+  }
+
+  &__btn {
+    position: relative;
+    margin: 0 auto;
+    @include btn-size(200px, 48px);
+    padding: 16px 0;
+    background-color: $button_bg;
+    border-radius: 5px;
+    @include text(13px, 600, uppercase);
+    cursor: pointer;
+    color: $color-link;
+    border: 2px solid $button_bg;
+    transition: background-color .2s linear, color .2s linear;
+
+    &:hover {
+      background-color: $color-link;
+      color: $button_bg;
+    }
+  }
+}
+
+.content {
+  padding: 90px 0;
+
+  @include mobile($iPad) {
+    padding: 20px 0;
+
+  }
+}
+
+.feature {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+
+
+  &__item {
+    position: relative;
+    width: 32%;
+    max-width: 370px;
+    text-align: center;
+    //height: 255px;
+
+    @include mobile($iPad) {
+      width: 48%;
+      margin: 0 auto;
+    }
+
+    @include mobile($iPhone) {
+      display: block;
+      width: 100%;
+    }
+
+  }
+
+  &__icon {
+    margin: 33px auto;
+  }
+
+  &__title {
+    margin: 0 auto 22px;
+    @include text(14px, 700, uppercase);
+
+  }
+
+  &__text {
+    margin: 0 auto 30px;
+    width: 90%;
+    max-width: 300px;
+    @include text(14px, 400, none);
+    line-height: 1.4;
+  }
+}
+
+.works {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+
+  &__item {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    width: 50%;
+    height: auto;
+    border-top: 1px solid $color-white;
+
+
+    &:nth-child(even) {
+      border-left: 1px solid $color-white;
+    }
+
+    @include mobile($iPad) {
+      width: 100%;
+    }
+
+    @include mobile($iPhone) {
+      display: block;
+    }
+  }
+
+
+  &__image-inside {
+    position: absolute;
+    width: 160px;
+    top: 45%;
+    left: 30%;
+    font-size: 14px;
+    text-align: center;
+    color: $color-white;
+    opacity: 0;
+    transition: opacity .3s linear;
+  }
+
+  &__image {
+    position: relative;
+    display: block;
+    height: auto;
+    overflow: hidden;
+    width: 50%;
+    background-color: $button_bg;
+
+    @include mobile($iPhone) {
+      width: 100%;
+    }
+
+    &:nth-child(2) {
+      border-left: 1px solid $color-white;
+    }
+
+    & img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: opacity .3s linear;
+
+    }
+
+    &:hover img {
+      opacity: 0.2;
+    }
+
+    &:hover .works__image-inside {
+      opacity: 1;
+    }
+  }
+
+  &__title {
+    margin-bottom: 12px;
+    @include text(14px, bold, uppercase);
+  }
+
+  
+
+
+}
+
+.team {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: left;
+
+
+  &__item {
+    display: block;
+    width: 24%;
+    max-width: 270px;
+    margin-bottom: 10px;
+
+    @include mobile($iPad) {
+      width: 48%;
+      margin: 20px auto;
+    }
+
+    @include mobile($iPhone) {
+      width: 100%;
+      //      margin: 20px auto;
+    }
+  }
+
+  &__photo {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  &__name {
+    margin-bottom: 15px;
+    @include text(22px, 500, none);
+  }
+
+  &__position {
+    @include text(13px, 500, uppercase);
+    color: $button_bg;
+  }
+
+  &__text {
+    margin: 30px 0;
+    width: 90%;
+    max-width: 300px;
+    @include text(14px, 400, none);
+    line-height: 1.4;
+  }
+
+  &__social {
+    display: flex;
+    text-align: center;
+
+    & a {
+      margin-right: 10px;
+      padding: 11px 0;
+      width: 40px;
+      height: 40px;
+      border: 1px solid $color-gray;
+      color: $color-gray;
+      transition: background .2s ease, color .2s ease;
+
+      &:hover {
+        background-color: $color-gray;
+        color: $color-white;
+      }
+
+    }
+  }
+}
+
+.testimonials {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-color: $bg-slide;
+
+  @include mobile($iPad) {
+    height: 600px;
+  }
+
+  @include mobile($iPhone) {
+    height: 510px;
+  }
+
+  &__text {
+    max-width: 490px;
+
+    font: {
+      family: $slide-font;
+      size: 36px;
+      style: italic;
+    }
+
+    quotes: '\201c''\201d';
+
+    @include mobile($iPad) {
+      width: 88%;
+      font-size: 28px;
+    }
+
+    @include mobile($iPhone) {
+      width: 100%;
+      font-size: 23px;
+    }
+  }
+
+  &__author {
+    margin: 30px 0;
+    @include text(13px, bold, uppercase);
+    font-style: normal;
+  }
+}
+
+.slider {
+  position: relative;
+
+  &-radio {
+    @for $i from 1 through $slides {
+      &-#{$i}:checked {
+        ~ ul li:nth-child(#{$i}) {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    @include mobile($iPad) {
+      display: block;
+    }
+
+    &-radio + & {
+      opacity: 0;
+      transition: opacity 1.5s linear;
+    }
+
+    &-radio:checked + & {
+
+      opacity: 1;
+    }
+  }
+
+  &__image {
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    text-align: center;
+
+    @include mobile($iPad) {
+      width: 100%;
+      height: 320px;
+    }
+
+    @include mobile($iPhone) {
+      height: auto;
+    }
+
+
+    & img {
+      display: block;
+      float: right;
+
+      @include mobile($iPad) {
+        width: 100%;
+      }
+    }
+  }
+
+  &__inner {
+    position: relative;
+    padding: 80px;
+    width: 50%;
+    overflow: hidden;
+    background-color: $bg-slide;
+    color: $color-white;
+
+    @include mobile(1170px) {
+      padding: 50px;
+    }
+
+    @include mobile($iPad) {
+      width: 100%;
+      height: 280px;
+      padding: 40px 50px;
+    }
+
+    @include mobile($iPad) {
+      padding: 30px;
+    }
+  }
+
+  & input {
+    position: absolute;
+    z-index: 9;
+    top: 380px;
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+    cursor: pointer;
+
+    @include mobile($iPad) {
+      top: 520px;
+    }
+
+    @include mobile($iPhone) {
+      top: 460px;
+    }
+
+    @for $count from 1 through $slides {
+
+      &:nth-of-type(#{$count}) {
+        right: 27% - $count*1.5;
+
+        @include mobile(1170px) {
+          right: 27% - $count*2.3;
+        }
+
+        @include mobile($iPhone) {
+          left: 26% + $count*7;
+        }
+
+      }
+    }
+  }
+
+  & ul {
+    list-style-type: none;
+  }
+
+  & li {
+    position: absolute;
+    z-index: 8;
+    top: 380px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: $color-white;
+    opacity: 0.3;
+    overflow: hidden;
+    text-indent: 16px;
+    cursor: pointer;
+
+    @include mobile($iPad) {
+      top: 520px;
+    }
+
+    @include mobile($iPhone) {
+      top: 460px;
+    }
+
+    @for $count from 1 through $slides {
+
+      &:nth-of-type(#{$count}) {
+        right: 27% - $count*1.5;
+
+        @include mobile(1170px) {
+          right: 27% - $count*2.3;
+        }
+
+        @include mobile($iPhone) {
+          left: 26% + $count*7;
+        }
+      }
+    }
+  }
+
+}
+
+.download {
+  text-align: center;
+
+  @include mobile($iPad) {
+    padding: 40px 0;
+
+  }
+
+  &__title {
+    margin-bottom: 15px;
+    @include text(28px, 300, none);
+
+  }
+
+  &__subtitle {
+    margin-bottom: 15px;
+    @include text(13px, bold, uppercase);
+  }
+
+  &__btn {
+    position: relative;
+    display: block;
+    margin: 10px auto;
+    padding: 15px 0;
+    @include btn-size(280px, 48px);
+    @include text(13px, 600, uppercase);
+    background-color: $button_bg;
+    border: 2px solid $button_bg;
+    color: $color-white;
+    text-decoration: none;
+    overflow: hidden;
+
+    transition: background-color .2s linear, color .2s linear;
+
+    & span {
+      position: absolute;
+      top: 15px;
+      left: 29%;
+      transition: top .8s ease .3s;
+
+    }
+
+    & i.fas {
+      position: absolute;
+      top: -50px;
+      left: 45%;
+      font-size: 30px;
+      transition: top .8s ease .3s;
+    }
+
+    &:hover {
+      background-color: $color-link;
+      color: $button_bg;
+
+      & i.fas {
+        top: 8px;
+      }
+
+      & span {
+        top: 75px;
+      }
+
+    }
+  }
+}
+
+.footer {
+  background-color: $bg-footer;
+  color: $color-gray;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    padding: 70px 0 100px;
+
+    @include mobile($iPad) {
+      display: block;
+      padding: 50px 0 40px;
+    }
+  }
+
+  &__item {
+    @extend .feature__item;
+
+  }
+
+  &__title {
+    margin-bottom: 15px;
+    @include text(14px, 700, uppercase);
+    color: $color-white;
+  }
+
+  &__text {
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
+
+  &__social {
+    margin: 0 auto;
+    display: inline-flex;
+
+    @include mobile($iPad) {
+      margin-bottom: 30px;
+    }
+
+    & a {
+      margin-right: 10px;
+      padding: 11px 0;
+      width: 40px;
+      height: 40px;
+      border: 2px solid $color-white;
+      text-decoration: none;
+      text-align: center;
+      color: $color-white;
+      transition: background .2s ease, color .2s ease;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        background-color: $color-white;
+        color: $bg-footer;
+      }
+
+    }
+  }
+
+  &__copyright {
+    margin: 0 auto;
+    padding: 30px 10px;
+    text-align: center;
+    line-height: 1.5;
+    background-color: $bg-copyright;
+    color: $color-gray;
+
+    & span {
+      font-family: $title-font;
+      color: $color-white;
+
+      &::before {
+        content: "\2665";
+
+        font: {
+          size: 18px;
+
+        }
+
+        color: red;
+        margin-right: 5px;
+      }
+    }
+
+  }
+}
